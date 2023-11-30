@@ -16,31 +16,55 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<Address> getAllAddresses() {
-        return addressRepository.findAll();
+        try {
+            return addressRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public Address getAddressById(Long addressId) {
-        Optional<Address> optionalAddress = addressRepository.findById(addressId);
-        return optionalAddress.orElse(null);
+        try {
+            Optional<Address> optionalAddress = addressRepository.findById(addressId);
+            return optionalAddress.orElse(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public Address createAddress(Address address) {
-        return addressRepository.save(address);
+        try {
+            return addressRepository.save(address);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public Address updateAddress(Long addressId, Address address) {
-        if (addressRepository.existsById(addressId)) {
-            address.setId(addressId);
-            return addressRepository.save(address);
+        try {
+            if (addressRepository.existsById(addressId)) {
+                address.setId(addressId);
+                return addressRepository.save(address);
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     @Override
     public void deleteAddress(Long addressId) {
-        addressRepository.deleteById(addressId);
+        try {
+            addressRepository.deleteById(addressId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -16,31 +16,55 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        try {
+            return userRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public User getUserById(Long userId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        return optionalUser.orElse(null);
+        try {
+            Optional<User> optionalUser = userRepository.findById(userId);
+            return optionalUser.orElse(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public User createUser(User user) {
-        return userRepository.save(user);
+        try {
+            return userRepository.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public User updateUser(Long userId, User user) {
-        if (userRepository.existsById(userId)) {
-            user.setId(userId);
-            return userRepository.save(user);
+        try {
+            if (userRepository.existsById(userId)) {
+                user.setId(userId);
+                return userRepository.save(user);
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     @Override
     public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
+        try {
+            userRepository.deleteById(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
